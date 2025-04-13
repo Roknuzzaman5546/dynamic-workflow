@@ -9,6 +9,10 @@ import MainLayout from './MainLayout/MainLayout';
 import Home from './Pages/Home/Home';
 import LogRegister from './Pages/Authentication/LogRegister';
 import { AuthProvider } from './Components/Hooks/AuthContext';
+import Dashboard from './Pages/Dashboard/Dashboard';
+import ProtectedRoute from './Components/ProtectedRoute';
+import CreateRoleForm from './Pages/Role/CreateRoleForm';
+import AdminDash from './Pages/Dashboard/AdminDash';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +30,20 @@ const router = createBrowserRouter([
       }
     ]
   },
+  {
+    path: "/dashboard",
+    element: <ProtectedRoute><Dashboard></Dashboard></ProtectedRoute>,
+    children:[
+      {
+        path: 'admindash',
+        element: <AdminDash></AdminDash>
+      },
+      {
+        path: 'createrole',
+        element: <CreateRoleForm></CreateRoleForm>
+      }
+    ]
+  }
 ]);
 
 

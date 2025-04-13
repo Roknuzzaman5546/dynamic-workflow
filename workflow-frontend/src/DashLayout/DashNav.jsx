@@ -1,9 +1,9 @@
 import React from 'react';
 import logo from '../assets/Images/logo.png'
-import { Link } from 'react-router-dom';
 import { useAuth } from '../Components/Hooks/AuthContext';
+import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const DashNav = () => {
     const { user, logout } = useAuth()
     return (
         <nav className="flex items-center justify-between bg-[#393E46] px-4 py-2 text-white">
@@ -13,6 +13,9 @@ const Navbar = () => {
                     <h2 className=' font-sans'>Workflow</h2>
                 </div>
             </Link>
+            <div>
+                <h2 className=' text-2xl italic'>{user?.name} welcome to Dashboard</h2>
+            </div>
             <div className="flex items-center justify-between gap-16">
                 <ul className="flex items-center justify-between gap-10">
                     <li className="group flex  cursor-pointer flex-col">
@@ -21,8 +24,9 @@ const Navbar = () => {
                         </Link>
                     </li>
                     <li className="group flex  cursor-pointer flex-col">
-                        <Link to='/dashboard/admindash'>
-                            Dashboard <span className="mt-[2px] h-[3px]  w-[0px] rounded-full bg-sky-500 transition-all duration-300 group-hover:w-full"></span>
+                        <Link to='/dashboard/createrole'>
+                            Create Role
+                            <span className="mt-[2px] h-[3px]  w-[0px] rounded-full bg-sky-500 transition-all duration-300 group-hover:w-full"></span>
                         </Link>
                     </li>
                 </ul>
@@ -41,4 +45,4 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+export default DashNav;
