@@ -1,8 +1,8 @@
 import React from 'react';
-import DashNav from '../../DashLayout/DashNav';
+import DashNav from './DashNav';
 import { Outlet } from 'react-router-dom';
 
-const Dashboard = () => {
+const DashLayout = () => {
 
 
     return (
@@ -13,4 +13,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default DashLayout;
