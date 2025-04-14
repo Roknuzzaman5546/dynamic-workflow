@@ -5,26 +5,27 @@ import Swal from 'sweetalert2';
 const UserRole = () => {
     const [showRoleForm, setShowRoleForm] = useState(false);
     const [showUserModal, setShowUserModal] = useState(false);
-    const [roleName, setRoleName] = useState('');
     const axiosPublic = useAxiosPublic();
 
-    const handleSubmit = async (e) => {
+    const handleRoleSubmit = async (e) => {
         e.preventDefault();
         const from = e.target;
         const role = from.role.value;
         const roleData = {
             name: role,
         }
+        console.log('this is log data', roleData);
         try {
             const response = await axiosPublic.post('/api/roles', roleData);
             console.log(response);
+            setShowRoleForm(false);
             Swal.fire('Role created successfully!');
-            setRoleName('');
         } catch (error) {
             console.error(error);
             Swal.fire(`Her is some wrong ${error}`, '', 'error')
         }
     };
+    
     return (
         <div className="p-6 space-y-10">
             {/* Create Role Section */}
@@ -40,19 +41,19 @@ const UserRole = () => {
                 </div>
 
                 {showRoleForm && (
-                    <form onClick={handleSubmit} className="bg-gray-100 p-4 rounded">
-                        <div className="mb-4">
-                            <label className="block font-medium">Role Name</label>
-                            <input
-                                name="role"
-                                value={roleName}
-                                onChange={(e) => setRoleName(e.target.value)}
-                                type="text" className="w-full border p-2 rounded" placeholder="Enter role name" />
-                        </div>
-                        <button type='submit' className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
-                            Submit
-                        </button>
-                    </form>
+                    <div className="bg-gray-100 p-4 rounded">
+                        <label className="block font-medium">Role Name</label>
+                        <form onSubmit={handleRoleSubmit}>
+                            <div className="mb-4">
+                                <input
+                                    name="role"
+                                    type="text" className="w-full border p-2 rounded" placeholder="Enter role name" />
+                            </div>
+                            <button type='submit' className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
                 )}
 
                 <table className="w-full border">
