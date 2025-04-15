@@ -24,6 +24,7 @@ const Banner = () => {
                 {/* text container here */}
                 {
                     user ?
+                    
                         <div className="drop-shadow-lg text-white text-center px-5">
                             <h1 className="text-xl lg:text-3xl font-semibold mb-3">Hey {user.name} Welcome in Workflow</h1>
                             <p className="text-sm md:text-base lg:text-lg">Go to dashboard and Start WorkProgress</p>

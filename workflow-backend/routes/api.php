@@ -22,4 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+Route::get('/roles', [RoleController::class, 'index']);
 Route::post('/roles', [RoleController::class, 'store']);
+Route::put('/roles/update/{id}', [RoleController::class, 'update']);

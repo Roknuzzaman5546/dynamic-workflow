@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useAxiosPublic from '../../../Components/Hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
 
 const UserRole = () => {
     const [showRoleForm, setShowRoleForm] = useState(false);
     const [showUserModal, setShowUserModal] = useState(false);
+    const [roles, setRoles] = useState([]);
     const axiosPublic = useAxiosPublic();
 
     const handleRoleSubmit = async (e) => {
@@ -25,7 +26,16 @@ const UserRole = () => {
             Swal.fire(`Her is some wrong ${error}`, '', 'error')
         }
     };
-    
+
+    useEffect(() => {
+        axiosPublic.get('/api/roles')
+            .then(res => setRoles(res.data.data))
+            .catch((error) => {
+                Swal.fire(`${error}`, '', 'error')
+            })
+    }, [])
+    // console.log(roles);
+
     return (
         <div className="p-6 space-y-10">
             {/* Create Role Section */}
@@ -65,13 +75,25 @@ const UserRole = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className="text-center">
-                            <td className="border p-2">1</td>
-                            <td className="border p-2">Admin</td>
-                            <td className="border p-2">
-                                <button className="text-blue-600 hover:underline">Edit</button>
-                            </td>
-                        </tr>
+                        {roles ?
+                            roles.map((role, index) => (
+                                <tr className="text-center" key={role?.id}>
+                                    <td className="border p-2">{index + 1}</td>
+                                    <td className="border p-2">{role?.name}</td>
+                                    <td className="border p-2 flex items-center gap-2 justify-center">
+                                        <a href={`/dashboard/createrole/${role?.id}`}>
+                                            <button className="bg-green-500 text-white text-xs px-3 py-1 rounded hover:bg-green-600">
+                                                Edit
+                                            </button>
+                                        </a>
+                                        <button className="bg-red-500 text-white text-xs px-3 py-1 rounded hover:bg-red-600">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            )) :
+                            <h2 className=' text-center text-2xl mt-5'>No more role right now</h2>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -118,7 +140,19 @@ const UserRole = () => {
                         <form className="space-y-4">
                             <div>
                                 <label className="block font-medium">Name</label>
-                                <input type="text" className="w-full border p-2 rounded" placeholder="Enter name" />
+                                <input type="text" name='name' className="w-full border p-2 rounded" placeholder="Enter name" />
+                            </div>
+                            <div>
+                                <label className="block font-medium">email</label>
+                                <input type="text" name='email' className="w-full border p-2 rounded" placeholder="Enter name" />
+                            </div>
+                            <div>
+                                <label className="block font-medium">Password</label>
+                                <input type="text" name='password' className="w-full border p-2 rounded" placeholder="Enter name" />
+                            </div>
+                            <div>
+                                <label className="block font-medium">Confirm Password</label>
+                                <input type="text" name='confirmPassword' className="w-full border p-2 rounded" placeholder="Enter name" />
                             </div>
                             <div>
                                 <label className="block font-medium">Role</label>
