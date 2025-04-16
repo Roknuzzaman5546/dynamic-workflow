@@ -22,7 +22,7 @@ class RoleController extends Controller
             'name' => 'required',
         ]);
         $role = new Role();
-        $role->name = $name;
+        $role->role = $name;
         $role->save();
         if ($role->save()) {
             return response()->json([
@@ -35,11 +35,21 @@ class RoleController extends Controller
     {
         $updateRole = Role::where('id', $id)->first();
         $updateRole->update([
-            'name' => $request->name
+            'role' => $request->name
         ]);
         return response()->json([
             'message' => 'Your role is updated',
             'data' => $updateRole,
+        ]);
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $deleteRole = Role::where('id', $id)->first();
+        $deleteRole->delete();
+        return response()->json([
+            'message' => "Role deleted successfully",
+            'data' => $deleteRole->name
         ]);
     }
 }

@@ -27,6 +27,19 @@ const UserRole = () => {
         }
     };
 
+    const handleRoleDelete = (id) => {
+        console.log('delete id', id)
+        axiosPublic.delete(`/api/roles/delete/${id}`)
+                .then(res => {
+                    console.log(res)
+                Swal.fire(res.data.message)
+            })
+            .catch((error) => {
+                console.log(error);
+                Swal.fire(`here is some problem ${error}`, '', 'error')
+            })
+    }
+
     useEffect(() => {
         axiosPublic.get('/api/roles')
             .then(res => setRoles(res.data.data))
@@ -79,14 +92,14 @@ const UserRole = () => {
                             roles.map((role, index) => (
                                 <tr className="text-center" key={role?.id}>
                                     <td className="border p-2">{index + 1}</td>
-                                    <td className="border p-2">{role?.name}</td>
+                                    <td className="border p-2">{role?.role}</td>
                                     <td className="border p-2 flex items-center gap-2 justify-center">
                                         <a href={`/dashboard/createrole/${role?.id}`}>
                                             <button className="bg-green-500 text-white text-xs px-3 py-1 rounded hover:bg-green-600">
                                                 Edit
                                             </button>
                                         </a>
-                                        <button className="bg-red-500 text-white text-xs px-3 py-1 rounded hover:bg-red-600">
+                                        <button onClick={() => handleRoleDelete(role?.id)} className="bg-red-500 text-white text-xs px-3 py-1 rounded hover:bg-red-600">
                                             Delete
                                         </button>
                                     </td>

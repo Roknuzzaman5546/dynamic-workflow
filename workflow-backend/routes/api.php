@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserRoleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +22,13 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Roles api here
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 Route::get('/roles', [RoleController::class, 'index']);
 Route::post('/roles', [RoleController::class, 'store']);
 Route::put('/roles/update/{id}', [RoleController::class, 'update']);
+Route::delete('/roles/delete/{id}', [RoleController::class, 'delete']);
+
+// user role api here
+Route::get('/userRole', [UserRoleController::class, 'index']);

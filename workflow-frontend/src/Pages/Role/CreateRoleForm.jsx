@@ -20,7 +20,7 @@ const CreateRoleForm = () => {
       name: role,
     }
     try {
-      console.log('this is update');
+      console.log('this is update', id);
       const response = await axiosPublic.put(`/api/roles/update/${id}`, roleData);
       console.log(response);
       Swal.fire(response.data.message);
@@ -45,7 +45,7 @@ const CreateRoleForm = () => {
       <h2 className="text-xl font-semibold mb-2 text-gray-700">Update New Role</h2>
       <div className=' flex justify-between items-center px-1 mb-4 text-lg font-semibold'>
         <h3>id : {thisRole?.id}</h3>
-        <h3>Role name: {thisRole?.name}</h3>
+        <h3>Role name: {thisRole?.role}</h3>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
