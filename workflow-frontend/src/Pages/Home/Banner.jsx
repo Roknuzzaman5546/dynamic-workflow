@@ -1,3 +1,4 @@
+// Banner page comment
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../Components/Hooks/AuthContext';
 import bannerImag1 from '../../assets/Images/banner1.jpg'
