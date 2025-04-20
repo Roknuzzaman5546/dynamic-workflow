@@ -9,7 +9,7 @@ class UserRoleController extends Controller
 {
     public function index()
     {
-        $userRole = User::join('role', 'users.roleid', '=', 'role.id')->select('users.*', 'role.role')->get();
+        $userRole = User::join('roles', 'users.role_id', '=', 'roles.id')->select('users.*', 'roles.role')->get();
         return response()->json([
             'message' => 'your message',
             'data' => $userRole

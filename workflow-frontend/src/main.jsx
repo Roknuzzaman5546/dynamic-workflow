@@ -14,6 +14,8 @@ import CreateRoleForm from './Pages/Role/CreateRoleForm';
 import AdminDash from './Pages/Dashboard/AdminDashboard/AdminDash';
 import DashLayout from './DashLayout/DashLayout';
 import UserRole from './Pages/Dashboard/AdminDashboard/UserRole';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
   {
@@ -34,7 +36,7 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <ProtectedRoute><DashLayout></DashLayout></ProtectedRoute>,
-    children:[
+    children: [
       {
         path: 'admindash',
         element: <AdminDash></AdminDash>
@@ -54,10 +56,12 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <div className=' font-sans'>
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
-    </div>
-  </StrictMode>,
+    <QueryClientProvider client={queryClient}>
+      <div className=' font-sans'>
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
+      </div>
+    </QueryClientProvider>
+  </StrictMode >,
 )

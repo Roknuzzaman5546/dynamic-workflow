@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import useAxiosPublic from '../../../Components/Hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
+import useUserRole from '../../../Components/Hooks/useUserRole';
 
 const UserRole = () => {
     const [showRoleForm, setShowRoleForm] = useState(false);
     const [showUserModal, setShowUserModal] = useState(false);
     const [roles, setRoles] = useState([]);
     const axiosPublic = useAxiosPublic();
+    const [userRole, refetch] = useUserRole();
+    const mapUserRole = userRole.data;
 
     const handleRoleSubmit = async (e) => {
         e.preventDefault();
@@ -21,6 +24,7 @@ const UserRole = () => {
             console.log(response);
             setShowRoleForm(false);
             Swal.fire('Role created successfully!');
+            refetch();
         } catch (error) {
             console.error(error);
             Swal.fire(`Her is some wrong ${error}`, '', 'error')
@@ -30,14 +34,42 @@ const UserRole = () => {
     const handleRoleDelete = (id) => {
         console.log('delete id', id)
         axiosPublic.delete(`/api/roles/delete/${id}`)
-                .then(res => {
-                    console.log(res)
+            .then(res => {
+                console.log(res)
                 Swal.fire(res.data.message)
+                refetch();
             })
             .catch((error) => {
                 console.log(error);
                 Swal.fire(`here is some problem ${error}`, '', 'error')
             })
+    }
+
+    const hanldeUserSubmit = async (e) => {
+        e.preventDefault();
+        const from = e.target;
+        const name = from.name.value;
+        const email = from.email.value;
+        const password = from.password.value;
+        const password_confirmation = from.password_confirmation.value;
+        const role = from.role.value;
+        const register = {
+            name: name,
+            email: email,
+            password: password,
+            password_confirmation: password_confirmation,
+            role_id: role
+        }
+        try {
+            console.log(register, 'this is register');
+            const res = await axiosPublic.post('/api/register', register);
+            console.log(res);
+            Swal.fire(`Your review successfully register in`)
+            refetch();
+        } catch (err) {
+            console.error(err.response.data);
+            Swal.fire('Register failed!', '', 'error')
+        }
     }
 
     useEffect(() => {
@@ -128,19 +160,31 @@ const UserRole = () => {
                         <tr className="bg-gray-200">
                             <th className="border p-2">SL</th>
                             <th className="border p-2">Name</th>
+                            <th className="border p-2">Email</th>
                             <th className="border p-2">Role</th>
                             <th className="border p-2">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className="text-center">
-                            <td className="border p-2">1</td>
-                            <td className="border p-2">John Doe</td>
-                            <td className="border p-2">Admin</td>
-                            <td className="border p-2">
-                                <button className="text-blue-600 hover:underline">Edit</button>
-                            </td>
-                        </tr>
+                        {
+                            userRole ?
+                                mapUserRole?.map(item => (
+                                    <tr key={item.id} className="text-center">
+                                        <td className="border p-2">{item?.id}</td>
+                                        <td className="border p-2">{item?.name}</td>
+                                        <td className="border p-2">{item?.email}</td>
+                                        <td className="border p-2">{item?.role}</td>
+                                        <td className="border p-2">
+                                            <a href={`/dashboard/createrole/${item?.id}`}>
+                                                <button className="bg-green-500 text-white text-xs px-3 py-1 rounded hover:bg-green-600">
+                                                    Edit
+                                                </button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                )) :
+                                <h2 className=' mt-10 text-xl font-bold italic text-center'>No User here</h2>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -150,7 +194,7 @@ const UserRole = () => {
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
                     <div className="bg-white p-6 rounded shadow-lg w-96">
                         <h2 className="text-lg font-bold mb-4">Add User</h2>
-                        <form className="space-y-4">
+                        <form onSubmit={hanldeUserSubmit} className="space-y-4">
                             <div>
                                 <label className="block font-medium">Name</label>
                                 <input type="text" name='name' className="w-full border p-2 rounded" placeholder="Enter name" />
@@ -161,18 +205,22 @@ const UserRole = () => {
                             </div>
                             <div>
                                 <label className="block font-medium">Password</label>
-                                <input type="text" name='password' className="w-full border p-2 rounded" placeholder="Enter name" />
+                                <input type="password" name='password' className="w-full border p-2 rounded" placeholder="Enter name" />
                             </div>
                             <div>
                                 <label className="block font-medium">Confirm Password</label>
-                                <input type="text" name='confirmPassword' className="w-full border p-2 rounded" placeholder="Enter name" />
+                                <input type="password" name='password_confirmation' className="w-full border p-2 rounded" placeholder="Enter name" />
                             </div>
                             <div>
                                 <label className="block font-medium">Role</label>
-                                <select className="w-full border p-2 rounded">
-                                    <option>Admin</option>
-                                    <option>Editor</option>
-                                    <option>Viewer</option>
+                                <select name='role' className="w-full border p-2 rounded">
+                                    {
+                                        roles?.map(role => (
+                                            <>
+                                                <option value={role.id}>{role.role}</option>
+                                            </>
+                                        ))
+                                    }
                                 </select>
                             </div>
                             <div className="flex justify-end space-x-2">

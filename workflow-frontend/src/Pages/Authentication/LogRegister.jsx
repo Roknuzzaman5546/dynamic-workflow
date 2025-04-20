@@ -54,7 +54,7 @@ const LogRegister = () => {
             Swal.fire(`Your review successfully register in`)
         } catch (err) {
             console.error(err.response.data);
-            Swal.error('Register failed!', '', 'error')
+            Swal.fire('Register failed!', '', 'error')
         }
     }
 
