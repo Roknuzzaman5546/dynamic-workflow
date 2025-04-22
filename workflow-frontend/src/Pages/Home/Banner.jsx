@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 
 const Banner = () => {
     const { user } = useAuth();
+    console.log(user);
     const [currentSlider, setCurrentSlider] = useState(0);
     const sliders = [{ img: bannerImag1, title: "Escape 1", des: "A Symphony of Tranquility. Experience the perfect blend of relaxation and excitement.", }, { img: bannerImag5, title: "Escape 2", des: "A Symphony of Tranquility. Experience the perfect blend of relaxation and excitement.", }, { img: bannerImag2, title: "Escape 3", des: "A Symphony of Tranquility. Experience the perfect blend of relaxation and excitement.", }, { img: bannerImag3, title: "Escape 4", des: "A Symphony of Tranquility. Experience the perfect blend of relaxation and excitement.", }, { img: bannerImag4, title: "Escape 5", des: "A Symphony of Tranquility. Experience the perfect blend of relaxation and excitement.", },];
     // if you don't want to change the slider automatically then you can just remove the useEffect

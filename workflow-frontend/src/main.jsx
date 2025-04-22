@@ -15,6 +15,7 @@ import AdminDash from './Pages/Dashboard/AdminDashboard/AdminDash';
 import DashLayout from './DashLayout/DashLayout';
 import UserRole from './Pages/Dashboard/AdminDashboard/UserRole';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import UserDash from './Pages/Dashboard/UserDashboard/UserDash';
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: 'admindash',
         element: <AdminDash></AdminDash>
+      },
+      {
+        path: 'userDash',
+        element: <UserDash></UserDash>
       },
       {
         path: 'userRole',
