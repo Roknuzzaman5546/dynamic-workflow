@@ -45,7 +45,7 @@ const UserRole = () => {
             })
     }
 
-    const hanldeUserSubmit = async (e) => {
+    const handleUserSubmit = async (e) => {
         e.preventDefault();
         const from = e.target;
         const name = from.name.value;
@@ -63,8 +63,10 @@ const UserRole = () => {
         try {
             console.log(register, 'this is register');
             const res = await axiosPublic.post('/api/register', register);
-            console.log(res);
-            Swal.fire(`Your review successfully register in`)
+            if (res) {
+                setShowUserModal(false)
+                Swal.fire(`Your review successfully register in`)
+            }
             refetch();
         } catch (err) {
             console.error(err.response.data);
@@ -194,7 +196,7 @@ const UserRole = () => {
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
                     <div className="bg-white p-6 rounded shadow-lg w-96">
                         <h2 className="text-lg font-bold mb-4">Add User</h2>
-                        <form onSubmit={hanldeUserSubmit} className="space-y-4">
+                        <form onSubmit={handleUserSubmit} className="space-y-4">
                             <div>
                                 <label className="block font-medium">Name</label>
                                 <input type="text" name='name' className="w-full border p-2 rounded" placeholder="Enter name" />
