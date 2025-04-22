@@ -32,3 +32,4 @@ Route::delete('/roles/delete/{id}', [RoleController::class, 'delete']);
 
 // user role api here
 Route::get('/userRole', [UserRoleController::class, 'index']);
+Route::post('/userData', [UserRoleController::class, 'userIndex']);

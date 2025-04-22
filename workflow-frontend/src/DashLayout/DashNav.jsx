@@ -4,7 +4,9 @@ import { useAuth } from '../Components/Hooks/AuthContext';
 import { Link } from 'react-router-dom';
 
 const DashNav = () => {
-    const { user, logout } = useAuth()
+    const { user, logout, userWithRole } = useAuth();
+    console.log(user);
+
     return (
         <nav className="flex items-center justify-between bg-[#393E46] px-4 py-2 text-white">
             <Link to='/'>

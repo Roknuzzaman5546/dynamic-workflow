@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class UserRoleController extends Controller
@@ -14,5 +15,18 @@ class UserRoleController extends Controller
             'message' => 'your message',
             'data' => $userRole
         ]); 
+    }
+
+    public function userIndex(){
+        $user = Auth::user();
+
+        // Load user's role (assuming belongsTo relationship)
+        $user->load('role');
+    
+        return response()->json([
+            'user' => $user,
+            'role' => $user->role,
+        ]);
+    
     }
 }
