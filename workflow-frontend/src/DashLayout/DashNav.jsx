@@ -4,14 +4,13 @@ import { useAuth } from '../Components/Hooks/AuthContext';
 import { Link } from 'react-router-dom';
 
 const DashNav = () => {
-    const { user, logout, userWithRole } = useAuth();
-    console.log(user);
+    const { user, logout } = useAuth();
 
     return (
         <nav className="flex items-center justify-between bg-[#393E46] px-4 py-2 text-white">
             <Link to='/'>
                 <div className="scale-100 cursor-pointer rounded-2xl px-3 py-2 text-xl font-semibold text-white transition-all duration-200 hover:scale-110 flex items-center gap-2">
-                    <img className=' w-8' src={logo} alt="" srcset="" />
+                    <img className=' w-8' src={logo} alt=""/>
                     <h2 className=' font-sans'>Workflow</h2>
                 </div>
             </Link>

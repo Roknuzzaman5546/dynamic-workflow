@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
                     Authorization: `Bearer ${token}`
                 }
             })
-                .then(res => setUserWithRole(res.data))
+                .then(res => setUserWithRole(res?.data?.user))
                 .catch((error) => {
                     setUserWithRole(error);
                 });

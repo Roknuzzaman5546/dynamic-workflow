@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../Components/Hooks/AuthContext';
 
 const Navbar = () => {
-    const { user, logout } = useAuth()
+    const { user, logout, userWithRole } = useAuth();
     return (
         <nav className="flex items-center justify-between bg-[#393E46] px-4 py-2 text-white">
             <Link to='/'>
@@ -21,9 +21,15 @@ const Navbar = () => {
                         </Link>
                     </li>
                     <li className="group flex  cursor-pointer flex-col">
-                        <Link to='/dashboard/admindash'>
-                            Dashboard <span className="mt-[2px] h-[3px]  w-[0px] rounded-full bg-sky-500 transition-all duration-300 group-hover:w-full"></span>
-                        </Link>
+                        {
+                            userWithRole?.role_name == 'Admin' ?
+                                <Link to='/dashboard/admindash'>
+                                    Dashboard <span className="mt-[2px] h-[3px]  w-[0px] rounded-full bg-sky-500 transition-all duration-300 group-hover:w-full"></span>
+                                </Link> :
+                                <Link to='/dashboard/userDash'>
+                                    Dashboard <span className="mt-[2px] h-[3px]  w-[0px] rounded-full bg-sky-500 transition-all duration-300 group-hover:w-full"></span>
+                                </Link>
+                        }
                     </li>
                 </ul>
                 <div className="flex items-center justify-between gap-5">
