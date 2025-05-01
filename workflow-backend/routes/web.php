@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Direct route page by use this case
+// Direct route page by use this case she can me success for for more better
 Route::get('/', function () {
     return view('welcome');
 });

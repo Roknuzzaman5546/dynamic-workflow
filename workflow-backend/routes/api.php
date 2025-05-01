@@ -30,6 +30,6 @@ Route::post('/roles', [RoleController::class, 'store']);
 Route::put('/roles/update/{id}', [RoleController::class, 'update']);
 Route::delete('/roles/delete/{id}', [RoleController::class, 'delete']);
 
-// user role api here
+// user role api here and added here also i need someone who get it better then me for coding life
 Route::get('/userRole', [UserRoleController::class, 'index']);
 Route::middleware('auth:sanctum')->get('/userData', [UserRoleController::class, 'userIndex']);
